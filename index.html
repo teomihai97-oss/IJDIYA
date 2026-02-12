@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IJDIYA</title>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background-image: url('fundal.png'); 
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat; 
+            background-attachment: fixed; 
+            font-family: "Segoe UI", sans-serif;
+            text-align: center;
+            color: blue; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; 
+        }
+
+        button {
+            padding: 18px 35px;
+            font-size: 20px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            background: blue;
+            color: #ff4b7d;
+            transition: transform 0.3s;
+        }
+
+        button:hover { transform: scale(1.1); }
+
+        input {
+            padding: 12px;
+            font-size: 18px;
+            border-radius: 10px;
+            border: none;
+            text-align: center;
+        }
+
+        #message {
+            display: none;
+            max-width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            background: rgba(45, 149, 160, 0.85); /* Am adăugat transparență pentru a vedea fundalul */
+            color: white;
+            padding: 25px;
+            border-radius: 15px; 
+            font-size: 18px;
+            line-height: 1.6;
+            animation: fade 1s ease-in;
+        }
+
+        @keyframes fade {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="content">
+        <h2>🔐 Mesaj secret</h2>
+        <p>Hint: Ce ne place nouă ? 🙂</p>
+        <input id="password" type="text" placeholder="Introdu parola">
+        <br><br>
+        <button onclick="checkPass()">Confirm</button>
+    </div>
+
+    <audio id="audioSecret">
+        <source src="muzica.mp3" type="audio/mpeg">
+        Browserul tău nu suportă audio.
+    </audio>
+
+    <script>
+        function checkPass() {
+            let pass = document.getElementById("password").value.toLowerCase().trim();
+
+            if (pass === "lego") {
+                document.getElementById("content").innerHTML = `<button onclick="nextStep()">Apasă aici </button>`;
+            } else {
+                alert("Hmmm… mai gândește-te 😉");
+            }
+        }
+
+        let step = 0;
+        const texts = [
+            "Vrei să vezi mesajul? 🙂",
+            "Chiar vrei să-l vezi? 😏",
+            "Bine… ești foarte drăguță… mai apasă o dată "
+        ];
+
+        function nextStep() {
+            if (step < texts.length) {
+                document.getElementById("content").innerHTML = `<button onclick="nextStep()">${texts[step]}</button>`;
+                step++;
+            } else {
+                showMessage();
+            }
+        }
+
+        function showMessage() {
+            // Nu mai schimbăm fundalul body-ului aici, rămâne imaginea
+            document.body.style.overflow = "auto"; // Permite scroll dacă textul e lung
+
+            // Afișăm textul final
+            document.getElementById("content").innerHTML = `
+            <div id="message" style="display:block;">
+                Eu mereu am fost sincer cu tine și am tot insistat să ne vedem pentru că vreau să îmi iau o piatră de pe inimă, dar văd că mă eviți și mă tot apasă. Nu îmi place să dau mesaje de genul, prefer comunicarea față în față.<br><br>
+
+                Dacă te-a speriat faptul că am fost prea „drăguț”, așa sunt eu.<br><br>
+
+                TU mi-ai făcut viața frumoasă, ești o fată specială și cu foarte multe calități.<br><br>
+
+                Consider ca noi doi putem avea ceva special pentru ca avem foarte multe lucruri în comun, avem valori comune și ne înțelegeam foarte bine când vorbeam sau ieșeam, fie să mergem prin mall, fie să facem Lego sau doar să ne plimbăm.<br><br>
+
+                Tu apreciezi florile — eu le ofer din inimă.<br>
+                Tu gătești extraordinar — eu ador ce gătești.<br>
+                Tu ești superbă — eu mă pierd mereu în frumusețea ta.<br>
+                Tu aduci bucurie — eu mă încarc cu fericirea ta.<br><br>
+
+                Efectiv de când este situația asta, îmi lipsești, chiar îmi lipsesc mesajele de la tine, îmi lipsește prezența ta, zâmbetul tău, râsul tău discuțiile pe care le aveam în care, puteam să fiu eu și să vorbesc tot fără să consider ca ii spun cuiva care mă va judeca, vreau să fiu alături de tine, să te fac fericita, să te văd fericită, când ești tristă să te fac să zâmbești și să uiți de supărare, când ești nervoasă, să te liniștesc și să fii lângă tine, să știu cum a fost ziua ta, nu varianta scurtă, tot, varianta lungă.<br><br>
+
+                Ochii tăi albaștri sunt unici… iar zâmbetul tău mă dezarmează complet.<br><br>
+
+                Eu m-am convins de niște lucruri, nu de ieri sau azi, ci de ceva timp, ce am simțit în interior când îți vedeam zâmbetul și cum eram atunci când ne vedeam mi-a confirmat.<br><br>
+
+                <h2 style="color:#466647;">M-am îndrăgostit de tine </h2>
+
+                Ești minunată! Știi vorbele alea, “toate la timpul lor” și “ce e al tău e pus de-o parte”? Ei bine….am simțit ca timpul a sosit, după nu mult timp, eu nu am văzut în tine o posibilă iubită, am văzut mai mult, prietena, iubita, soție, mamă, jumătatea mea bună!.
+            </div>`;
+
+            // Pornim muzica
+            let muzica = document.getElementById("audioSecret");
+            muzica.play().catch(error => {
+                console.log("Autoplay a fost blocat de browser. Muzica va porni la următoarea interacțiune.");
+            });
+        }
+    </script>
+
+</body>
+</html>
